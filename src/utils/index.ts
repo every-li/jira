@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 
-export const isFalse = (value: any) => {
+// 判断输入的值是否为false
+export const isFalse = (value: unknown): boolean => {
   return value === 0 ? false : !value;
 };
 
 // 去除对象中的空值
-export const cleanObject = (object: any) => {
+export const cleanObject = (object: object) => {
   const result = { ...object };
   Object.keys(result).forEach(key => {
     const value = result[key];

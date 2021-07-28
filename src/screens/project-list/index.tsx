@@ -5,25 +5,26 @@ import SearchPanel from './search-panel';
 import List from './list';
 
 const ProjectListScreen = () => {
+  // api 地址
   const apiUrl = process.env.REACT_APP_API_URL;
 
-  const [list, setList] = useState([]);
+  const [list, setList] = useState([]); // 列表
   const [param, setParam] = useState({
     name: '',
     personId: '',
   });
-  const debouncesParam = useDebounce(param, 1000);
+  const debouncesParam = useDebounce(param, 200);
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(param))}`).then(
-      async res => {
-        if (res.ok) {
-          setList(await res.json());
-        }
-      },
-    );
-  }, [debouncesParam]);
+    fetch(
+      `${apiUrl}/projects?${qs.stringify(cleanObject(debouncesParam))}`,
+    ).then(async res => {
+      if (res.ok) {
+        setList(await res.json());
+      }
+    });
+  }, [apiUrl, debouncesParam]);
 
   useEffect(() => {
     fetch(`${apiUrl}/users`).then(async res => {
@@ -31,16 +32,11 @@ const ProjectListScreen = () => {
         setUsers(await res.json());
       }
     });
-  }, [debouncesParam]);
+  }, [apiUrl, debouncesParam]);
 
   return (
     <div>
-      <SearchPanel
-        param={param}
-        setParam={setParam}
-        users={users}
-        setUsers={setUsers}
-      />
+      <SearchPanel param={param} setParam={setParam} users={users} />
       <List list={list} users={users} />
     </div>
   );

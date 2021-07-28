@@ -1,5 +1,22 @@
-const SearchPanel = props => {
-  const { param, setParam, users, setUsers } = props;
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  title: string;
+  organization: string;
+}
+
+interface SearchPanelProps {
+  param: {
+    name: string;
+    personId: string;
+  };
+  setParam: (param: SearchPanelProps['param']) => void;
+  users: User[];
+}
+
+const SearchPanel = (props: SearchPanelProps) => {
+  const { param, setParam, users } = props;
 
   return (
     <form>

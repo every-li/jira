@@ -1,4 +1,19 @@
-const List = props => {
+import { User } from './search-panel';
+
+interface Project {
+  id: string;
+  name: string;
+  personId: string;
+  pin: boolean;
+  organization: string;
+}
+
+interface ListProps {
+  list: Project[];
+  users: User[];
+}
+
+const List = (props: ListProps) => {
   const { list, users } = props;
 
   return (
